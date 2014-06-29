@@ -1,12 +1,13 @@
 package percolation_hw1;
 
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
-import shortcuts.print;
+//import shortcuts.print;
 
 public class Percolation {
 
 	private int N;
 	private int virtualTopSite;
+	private int virtualBottomSite;
 
 	private boolean[] indicators = null;
 	private int[][] visualGrid = null;
@@ -46,16 +47,20 @@ public class Percolation {
 
 		// WeightedQuickUnion's relevant values are from 0 to N*N-1...
 		// the N*N value is for the virtualTopSite, which is connected to the first N entries
-		this.uf = new WeightedQuickUnionUF(N*N + 1);
+		// N*N + 1 is for the virtualBottomSite, which is connected to the last N entries
+		this.uf = new WeightedQuickUnionUF(N*N + 1 + 1);
 		
 		// this.virtualTopSite takes the value of the last position in this.uf
 		this.virtualTopSite = N*N;
-		uf.union(N*N, this.virtualTopSite);
+		this.virtualBottomSite = N*N + 1;
+		//this.uf.union(N*N, this.virtualTopSite);
 		
-		// connect all from [1, N] to the virtual root (located at the last spot)
+		// connect all in [0, N) to the virtual root (located at the last spot)
 		for(int i = 0; i < N; i++)
-			uf.union(i, this.virtualTopSite);
+			this.uf.union(i, this.virtualTopSite);
 		
+		for(int i = N*N-N; i < N*N; i++)
+			this.uf.union(i, this.virtualBottomSite);
 	}
 	
 	
@@ -65,7 +70,7 @@ public class Percolation {
 		if(i <= 0 || j <= 0) throw new IndexOutOfBoundsException();
 
 		// the UF structure we use starts at 0
-		// this matches it
+		// do this to match it
 		i--; j--;
 
 		
@@ -122,23 +127,17 @@ public class Percolation {
 	public boolean isFull(int i, int j){
 		if(i > N || j > N) throw new IndexOutOfBoundsException();
 		if(i < 1 || j < 1) throw new IndexOutOfBoundsException();
-
 		
-		return !this.isOpen(i, j);
+		// a full site is an open site that can be connected to an open site in the top row via a chain of neighboring (left, right, up, down) open sites.
+
+		return this.isOpen(i, j);
 	}
 	
 	
 	/** does the system percolate? */
 	public boolean percolates(){
 		
-		// check if the last row of the grid is connected to the virtual site
-		// go through N entries and per entry perform a logN calculation,
-		// therefore NlogN
-		for(int i = N*N-N - 1; i < N*N; i++)
-			if(this.uf.connected(i, this.virtualTopSite))
-				return true;
-		
-		return false;
+		return this.uf.connected(this.virtualTopSite, this.virtualBottomSite);
 	}
 	
 	
@@ -206,23 +205,23 @@ public class Percolation {
 //		print.ln(bob.mappedGrid);
 //		print.ln();
 		
-		print.ln("visual");
-		print.ln(bob.visualGrid);
-		print.ln();
-		//print.ln(bob.indicators);
-		
-		print.ln();
-		
-		int[] positions = new int[N*N];
-		for(int i = 0; i < N*N; i++)
-			positions[i] = i;
-		
-		print.ln(positions);
-		//print.ln(linearSetup);
-		
-		print.ln();
-
-		print.ln("percolates? " + bob.percolates());
+//		print.ln("visual");
+//		print.ln(bob.visualGrid);
+//		print.ln();
+//		//print.ln(bob.indicators);
+//		
+//		print.ln();
+//		
+//		int[] positions = new int[N*N];
+//		for(int i = 0; i < N*N; i++)
+//			positions[i] = i;
+//		
+//		print.ln(positions);
+//		print.ln(linearSetup);
+//		
+//		print.ln();
+//
+//		print.ln("percolates? " + bob.percolates());
 		
 	}
 
