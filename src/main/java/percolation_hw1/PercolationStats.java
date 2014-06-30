@@ -10,10 +10,12 @@ public class PercolationStats {
 	private double mean;
 	private double stddev;
 	
-	
+	private int T;
 	
 	/** perform T independent computational experiments on an N-by-N grid */
 	public PercolationStats(int N, int T){
+		
+		this.T = T;
 		
 		Percolation per;	
 		double openSites;
@@ -42,12 +44,6 @@ public class PercolationStats {
 			
 			rates[i] = rate;
 			
-			/*
-			System.out.println("openSites = " + openSites);
-			System.out.println("total = " + N*N);
-			System.out.println();
-			System.out.println("rate = " + (openSites/((double)N*N)));
-			*/
 		}
 		
 	}
@@ -78,14 +74,15 @@ public class PercolationStats {
 	
 	/** returns lower bound of the 95% confidence interval */
 	public double confidenceLo(){
-		return 1.0;
+		return this.mean - (1.96*this.stddev)/(Math.pow(this.T, 0.5));
 				
 	}
 	
 	
 	/** returns upper bound of the 95% confidence interval */
 	public double confidenceHi(){
-		return 1.0;
+		return this.mean + (1.96*this.stddev)/(Math.pow(this.T, 0.5));
+		
 	}
 	
 	
@@ -97,8 +94,9 @@ public class PercolationStats {
 		
 		PercolationStats stats = new PercolationStats(N, T);
 		
-		System.out.println("mean   = " + stats.mean() );
-		System.out.println("stddev = " + stats.stddev() );
+		System.out.println("mean\t\t\t= " + stats.mean() );
+		System.out.println("stddev\t\t\t= " + stats.stddev() );
+		System.out.println("95% confidence interval = " + stats.confidenceLo() + ", " + stats.confidenceHi());
 
 	}
 
