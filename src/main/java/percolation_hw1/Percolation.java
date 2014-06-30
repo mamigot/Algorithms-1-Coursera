@@ -13,6 +13,8 @@ public class Percolation {
 	private int[][] mappedGrid = null;
 	
 	private WeightedQuickUnionUF uf = null;
+	
+	private boolean oneSiteIsFull = false;
 
 	
 	
@@ -103,6 +105,10 @@ public class Percolation {
 		}catch(IndexOutOfBoundsException e){}
 		
 		
+		// if the system percolates as a result of
+		// opening this, then it means we got a full site!
+		this.oneSiteIsFull = this.percolates();
+		
 	}
 	
 	
@@ -122,8 +128,9 @@ public class Percolation {
 		if(i < 1 || j < 1) throw new IndexOutOfBoundsException();
 		
 		// a full site is an open site that can be connected to an open site in the top row via a chain of neighboring (left, right, up, down) open sites.
-
-		return this.isOpen(i, j) && this.uf.connected(this.mappedGrid[i-1][j-1], this.virtualTopSite);
+		
+		// will work as long as we stop when we find a way in which it percolates
+		return this.oneSiteIsFull && this.isOpen(i, j);
 	}
 	
 	

@@ -5,11 +5,7 @@ public final class print {
 	public static void ln(){
 		System.out.println();
 	}
-	
-	public static void ln(Object arg){
-		System.out.println(arg.toString());
-	}
-	
+		
 	public static void ln(String arg){
 		System.out.println(arg);
 	}
@@ -28,6 +24,15 @@ public final class print {
 	
 	public static void ln(double arg){
 		System.out.println(arg);
+	}
+	
+	public static void ln(String[] arg){
+		System.out.print("[ ");
+		
+		for(String a:arg)
+			System.out.print(a + " ");
+		
+		System.out.println("]");
 	}
 	
 	public static void ln(int[] arg){
