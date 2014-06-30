@@ -28,11 +28,11 @@ public class PercolationStats {
 			openSites = 0;
 			
 			do{
-				randomX = StdRandom.uniform(1, N);
-				randomY = StdRandom.uniform(1, N);
+				randomX = StdRandom.uniform(1, N + 1);
+				randomY = StdRandom.uniform(1, N + 1);
 				
 				if( !per.isOpen(randomX, randomY) ){
-					per.open(StdRandom.uniform(1, N+1), StdRandom.uniform(1, N+1));
+					per.open(randomX, randomY);
 					openSites++;
 				}
 				
@@ -56,7 +56,7 @@ public class PercolationStats {
 	/** sample mean of percolation threshold */
 	public double mean(){
 		
-		int len = this.rates.length;
+		double len = this.rates.length;
 		double sum = 0;
 		
 		for(int i = 0; i < len; i++)
@@ -64,6 +64,7 @@ public class PercolationStats {
 		
 		this.mean = sum/len;
 		return this.mean;
+		
 	}
 	
 	
@@ -92,7 +93,7 @@ public class PercolationStats {
 	public static void main(String[] args) {
 		
 		int N = 200;
-		int T = 10;
+		int T = 100;
 		
 		PercolationStats stats = new PercolationStats(N, T);
 		

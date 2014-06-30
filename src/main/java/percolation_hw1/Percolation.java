@@ -1,7 +1,7 @@
 package percolation_hw1;
 
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
-//import shortcuts.print;
+import shortcuts.print;
 
 public class Percolation {
 
@@ -39,10 +39,12 @@ public class Percolation {
 			}
 		}
 		
-		this.indicators = new boolean[N*N];
+		this.indicators = new boolean[N*N + 1 + 1];
 		for(int i = 0; i < this.indicators.length; i++){
 			this.indicators[i] = false;
 		}
+		this.indicators[N*N] = true;
+		this.indicators[N*N + 1] = true;
 		
 
 		// WeightedQuickUnion's relevant values are from 0 to N*N-1...
@@ -54,6 +56,7 @@ public class Percolation {
 		this.virtualTopSite = N*N;
 		this.virtualBottomSite = N*N + 1;
 		//this.uf.union(N*N, this.virtualTopSite);
+		
 		
 		// connect all in [0, N) to the virtual root (located at the last spot)
 		for(int i = 0; i < N; i++)
@@ -67,7 +70,7 @@ public class Percolation {
 	/** open site (row i, column j) if it is not already */
 	public void open(int i, int j){
 		if(i > N || j > N) throw new IndexOutOfBoundsException();
-		if(i <= 0 || j <= 0) throw new IndexOutOfBoundsException();
+		if(i < 1 || j < 1) throw new IndexOutOfBoundsException();
 
 		// the UF structure we use starts at 0
 		// do this to match it
@@ -78,10 +81,7 @@ public class Percolation {
 		int target = this.mappedGrid[i][j];
 		// highlight the indicator (used for isOpen())
 		this.indicators[target] = true;
-		
-//		print.ln("open: (" + i + ", " + j + ")");
-//		print.ln("target: " + target); print.ln();
-		
+
 		
 		// check up, down, left and right positions
 		// if they're open, then union them with this one!
@@ -145,7 +145,8 @@ public class Percolation {
 	
 	// used to check if the mapped UF structure is open
 	private boolean isOpenMapped(int i, int j){
-		
+		// isOpenMapped takes the "mapped" values, which
+		// reduce i and j by 1, whereas isOpen doesn't reduce them!
 		return this.isOpen(i + 1, j + 1);
 		
 	}
