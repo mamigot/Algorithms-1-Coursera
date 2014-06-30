@@ -14,12 +14,15 @@ public class Percolation {
 	
 	private WeightedQuickUnionUF uf = null;
 	
-	private boolean oneSiteIsFull = false;
+	private boolean percolatesRightNow = false;
+	private int firstPercolator;
 
 	
 	
 	/** create N-by-N grid, with all sites blocked */
 	public Percolation(int N){
+		if(N <= 0) throw new IllegalArgumentException();
+		
 		this.N = N;
 		
 		// grid with (0, 0) at the left
@@ -49,12 +52,18 @@ public class Percolation {
 		// this.virtualTopSite takes the value of the last position in this.uf
 		this.virtualTopSite = N*N;
 		this.virtualBottomSite = N*N + 1;
-		//this.uf.union(N*N, this.virtualTopSite);
+		
+		// will never be in the array or relevant for anything other than isFull()
+		this.firstPercolator = N*N + 2;
+		
 		
 		
 		// connect all in [0, N) to the virtual site (located at the last spot)
 		for(int i = 0; i < N; i++)
 			this.uf.union(i, this.virtualTopSite);
+		
+		// "corner case test"
+		if(N == 1) return;
 		
 		// connect the bottom row to that virtual site
 		for(int i = N*N-N; i < N*N; i++)
@@ -106,8 +115,17 @@ public class Percolation {
 		
 		
 		// if the system percolates as a result of
-		// opening this, then it means we got a full site!
-		this.oneSiteIsFull = this.percolates();
+		// opening this, then it means we got the firstPercolator!
+		// only consider sites on the bottom row
+		if(N == 1) this.percolatesRightNow = true;
+		
+		if( !this.percolatesRightNow && (target >= N*N-N && target < N*N)){
+			this.percolatesRightNow = this.percolates();
+			
+			if(this.percolatesRightNow)
+				this.firstPercolator = target;
+		}
+		
 		
 	}
 	
@@ -116,7 +134,7 @@ public class Percolation {
 	public boolean isOpen(int i, int j){
 		if(i > N || j > N) throw new IndexOutOfBoundsException();
 		if(i < 1 || j < 1) throw new IndexOutOfBoundsException();
-
+		
 		// retrieve the index from the mappedGrid and then its flag
 		return this.indicators[ this.mappedGrid[i - 1][j - 1] ];
 	}
@@ -128,15 +146,17 @@ public class Percolation {
 		if(i < 1 || j < 1) throw new IndexOutOfBoundsException();
 		
 		// a full site is an open site that can be connected to an open site in the top row via a chain of neighboring (left, right, up, down) open sites.
+		// see diagram at:
+		// http://coursera.cs.princeton.edu/algs4/checklists/percolation.html
 		
 		// will work as long as we stop when we find a way in which it percolates
-		return this.oneSiteIsFull && this.isOpen(i, j);
+		return this.isOpen(i, j) && (this.mappedGrid[i-1][j-1] == this.firstPercolator);
 	}
 	
 	
 	/** does the system percolate? */
 	public boolean percolates(){
-		
+		if(N == 1) return this.percolatesRightNow;
 		return this.uf.connected(this.virtualTopSite, this.virtualBottomSite);
 	}
 	
@@ -183,13 +203,15 @@ public class Percolation {
 	
 	public static void main(String[] args) {
 		
-		int N = 4;
+		int N = 2;
 		Percolation bob = new Percolation(N);
 		
-		bob.open(1, 1);		
-		bob.open(4, 1);
-		bob.open(3, 1);
-		bob.open(4, 1);
+
+		print.ln( bob.percolates() );
+		
+//		bob.open(4, 1);
+//		bob.open(3, 1);
+//		bob.open(4, 1);
 		
 //		print.ln("isOpen = " + bob.isOpen(4, 2));
 //		System.exit(1);

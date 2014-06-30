@@ -15,6 +15,8 @@ public class PercolationStats {
 	/** perform T independent computational experiments on an N-by-N grid */
 	public PercolationStats(int N, int T){
 		
+		if(N <= 0 || T <= 0) throw new IllegalArgumentException();
+		
 		this.T = T;
 		
 		Percolation per;	
@@ -77,14 +79,14 @@ public class PercolationStats {
 	
 	/** returns lower bound of the 95% confidence interval */
 	public double confidenceLo(){
-		return this.mean - (1.96*this.stddev)/(Math.pow(this.T, 0.5));
+		return Math.abs( this.mean - (1.96*this.stddev)/(Math.pow(this.T, 0.5)) );
 				
 	}
 	
 	
 	/** returns upper bound of the 95% confidence interval */
 	public double confidenceHi(){
-		return this.mean + (1.96*this.stddev)/(Math.pow(this.T, 0.5));
+		return Math.abs( this.mean + (1.96*this.stddev)/(Math.pow(this.T, 0.5)) );
 		
 	}
 	
