@@ -66,6 +66,9 @@ public class PercolationStats {
 	
 	/** sample standard deviation of percolation threshold */
 	public double stddev(){
+		// http://coursera.cs.princeton.edu/algs4/checklists/percolation.html
+		if(this.T == 1) return Double.NaN;
+		
 		this.stddev = StdStats.stddev(rates);
 		return this.stddev;
 		

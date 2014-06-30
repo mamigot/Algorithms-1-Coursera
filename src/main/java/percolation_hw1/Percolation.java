@@ -10,7 +10,6 @@ public class Percolation {
 	private int virtualBottomSite;
 
 	private boolean[] indicators = null;
-	private int[][] visualGrid = null;
 	private int[][] mappedGrid = null;
 	
 	private WeightedQuickUnionUF uf = null;
@@ -25,26 +24,19 @@ public class Percolation {
 		// used to find the "target" (see open())
 		this.mappedGrid = new int[N][N];
 		
-		// grid with (1, 1) at the left
-		// just for debugging purposes
-		this.visualGrid = new int[N][N];
-
-		
 		int counter = 0;
 		for(int i = 0; i < N; i++){
 			for(int j = 0; j < N; j++){
-				this.visualGrid[i][j] = counter + 1;
 				this.mappedGrid[i][j] = counter;
 				counter++;
 			}
 		}
 		
-		this.indicators = new boolean[N*N + 1 + 1];
+		this.indicators = new boolean[N*N];
 		for(int i = 0; i < this.indicators.length; i++){
 			this.indicators[i] = false;
 		}
-		this.indicators[N*N] = true;
-		this.indicators[N*N + 1] = true;
+
 		
 
 		// WeightedQuickUnion's relevant values are from 0 to N*N-1...
@@ -58,10 +50,11 @@ public class Percolation {
 		//this.uf.union(N*N, this.virtualTopSite);
 		
 		
-		// connect all in [0, N) to the virtual root (located at the last spot)
+		// connect all in [0, N) to the virtual site (located at the last spot)
 		for(int i = 0; i < N; i++)
 			this.uf.union(i, this.virtualTopSite);
 		
+		// connect the bottom row to that virtual site
 		for(int i = N*N-N; i < N*N; i++)
 			this.uf.union(i, this.virtualBottomSite);
 	}
@@ -130,7 +123,7 @@ public class Percolation {
 		
 		// a full site is an open site that can be connected to an open site in the top row via a chain of neighboring (left, right, up, down) open sites.
 
-		return this.isOpen(i, j);
+		return this.isOpen(i, j) && this.uf.connected(this.mappedGrid[i-1][j-1], this.virtualTopSite);
 	}
 	
 	
