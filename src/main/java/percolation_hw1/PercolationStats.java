@@ -1,7 +1,7 @@
-package percolation_hw1;
-
-import edu.princeton.cs.introcs.StdRandom;
-import edu.princeton.cs.introcs.StdStats;
+//package percolation_hw1;
+//
+//import edu.princeton.cs.introcs.StdRandom;
+//import edu.princeton.cs.introcs.StdStats;
 
 public class PercolationStats {
 	
@@ -79,6 +79,9 @@ public class PercolationStats {
 	
 	/** returns lower bound of the 95% confidence interval */
 	public double confidenceLo(){
+		if(this.mean == 0.0) this.mean();
+		if(this.stddev == 0.0) this.stddev();
+		
 		return Math.abs( this.mean - (1.96*this.stddev)/(Math.pow(this.T, 0.5)) );
 				
 	}
@@ -86,6 +89,9 @@ public class PercolationStats {
 	
 	/** returns upper bound of the 95% confidence interval */
 	public double confidenceHi(){
+		if(this.mean == 0.0) this.mean();
+		if(this.stddev == 0.0) this.stddev();
+		
 		return Math.abs( this.mean + (1.96*this.stddev)/(Math.pow(this.T, 0.5)) );
 		
 	}
