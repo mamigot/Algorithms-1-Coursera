@@ -18,11 +18,13 @@
 package percolation_hw1;
 
 import java.awt.Font;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 import shortcuts.print;
-
 import edu.princeton.cs.introcs.In;
 import edu.princeton.cs.introcs.StdDraw;
+import edu.princeton.cs.introcs.StdIn;
 
 public class PercolationVisualizer {
 
@@ -66,8 +68,18 @@ public class PercolationVisualizer {
 
     public static void main(String[] args) {
     	
-    	In in = new In(args[0]);      // input file
-        int N = in.readInt();         // N-by-N percolation system
+    	try {
+			System.setIn(new FileInputStream("/Users/miguelamigot/Documents/GitHub/Algorithms 1, Coursera/src/test/percolation/input20.txt"));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    	
+//    	In in = new In(args[0]);      // input file
+//        int N = in.readInt();         // N-by-N percolation system
+    	
+    	int N = StdIn.readInt();
 
         // turn on animation mode
         StdDraw.show(0);
@@ -76,9 +88,9 @@ public class PercolationVisualizer {
         Percolation perc = new Percolation(N);
         draw(perc, N);
         StdDraw.show(DELAY);
-        while (!in.isEmpty()) {
-            int i = in.readInt();
-            int j = in.readInt();
+        while (!StdIn.isEmpty()) {
+            int i = StdIn.readInt();
+            int j = StdIn.readInt();
             perc.open(i, j);
             draw(perc, N);
             StdDraw.show(DELAY);

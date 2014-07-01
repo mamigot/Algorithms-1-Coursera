@@ -15,8 +15,6 @@ public class Percolation {
 	private WeightedQuickUnionUF uf = null;
 	
 	private boolean percolatesRightNow = false;
-	private int firstPercolator;
-
 	
 	
 	/** create N-by-N grid, with all sites blocked */
@@ -52,10 +50,6 @@ public class Percolation {
 		// this.virtualTopSite takes the value of the last position in this.uf
 		this.virtualTopSite = N*N;
 		this.virtualBottomSite = N*N + 1;
-		
-		// will never be in the array or relevant for anything other than isFull()
-		this.firstPercolator = N*N + 2;
-		
 		
 		
 		// connect all in [0, N) to the virtual site (located at the last spot)
@@ -113,19 +107,9 @@ public class Percolation {
 		
 		}catch(IndexOutOfBoundsException e){}
 		
-		
-		// if the system percolates as a result of
-		// opening this, then it means we got the firstPercolator!
-		// only consider sites on the bottom row
+
+		//edge case
 		if(N == 1) this.percolatesRightNow = true;
-		
-		if( !this.percolatesRightNow && (target >= N*N-N && target < N*N)){
-			this.percolatesRightNow = this.percolates();
-			
-			if(this.percolatesRightNow)
-				this.firstPercolator = target;
-		}
-		
 		
 	}
 	
@@ -150,13 +134,23 @@ public class Percolation {
 		// http://coursera.cs.princeton.edu/algs4/checklists/percolation.html
 		
 		// will work as long as we stop when we find a way in which it percolates
-		return this.isOpen(i, j) && (this.mappedGrid[i-1][j-1] == this.firstPercolator);
+		boolean res = this.isOpen(i, j) && this.uf.connected(this.mappedGrid[i-1][j-1], this.virtualBottomSite) && this.percolates();
+		if(res && (this.mappedGrid[i-1][j-1] >= N*N-N)){
+			print.ln("( " + i + ", " + j + " ) " + " is full!");
+			print.ln("size of subtree: " + this.uf.find(this.mappedGrid[i-1][j-1]));
+			print.ln("size of subtree above: " + this.uf.find(this.mappedGrid[i-2][j-1]));
+			print.ln();
+		}
+			
+		
+		return res;
 	}
 	
 	
 	/** does the system percolate? */
 	public boolean percolates(){
 		if(N == 1) return this.percolatesRightNow;
+		
 		return this.uf.connected(this.virtualTopSite, this.virtualBottomSite);
 	}
 	
