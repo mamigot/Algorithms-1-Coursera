@@ -13,6 +13,7 @@ public class Percolation {
 	private int[][] mappedGrid = null;
 	
 	private WeightedQuickUnionUF uf = null;
+	private WeightedQuickUnionUF extUf = null;
 	
 	private boolean percolatesRightNow = false;
 	
@@ -46,6 +47,7 @@ public class Percolation {
 		// the N*N value is for the virtualTopSite, which is connected to the first N entries
 		// N*N + 1 is for the virtualBottomSite, which is connected to the last N entries
 		this.uf = new WeightedQuickUnionUF(N*N + 1 + 1);
+		this.extUf = new WeightedQuickUnionUF(N*N + 1);
 		
 		// this.virtualTopSite takes the value of the last position in this.uf
 		this.virtualTopSite = N*N;
@@ -53,8 +55,10 @@ public class Percolation {
 		
 		
 		// connect all in [0, N) to the virtual site (located at the last spot)
-		for(int i = 0; i < N; i++)
+		for(int i = 0; i < N; i++){
 			this.uf.union(i, this.virtualTopSite);
+			this.extUf.union(i, this.virtualTopSite);
+		}
 		
 		// "corner case test"
 		if(N == 1) return;
@@ -84,31 +88,39 @@ public class Percolation {
 		// check up, down, left and right positions
 		// if they're open, then union them with this one!
 		try{
-		if(this.isOpenMapped(i-1, j))
+		if(this.isOpenMapped(i-1, j)){
 			this.uf.union(target, this.up(i, j));
+			this.extUf.union(target, this.up(i, j));
+		}
 		
 		}catch(IndexOutOfBoundsException e){}
 		
 		try{
-		if(this.isOpenMapped(i+1, j))
+		if(this.isOpenMapped(i+1, j)){
 			this.uf.union(target, this.down(i, j));
+			this.extUf.union(target, this.down(i, j));
+		}
 		
 		}catch(IndexOutOfBoundsException e){}
 		
 		try{
-		if(this.isOpenMapped(i, j-1))
+		if(this.isOpenMapped(i, j-1)){
 			this.uf.union(target, this.left(i, j));
+			this.extUf.union(target, this.left(i, j));
+		}
 		
 		}catch(IndexOutOfBoundsException e){}
 		
 		try{
-		if(this.isOpenMapped(i, j+1))
+		if(this.isOpenMapped(i, j+1)){
 			this.uf.union(target, this.right(i, j));
+			this.extUf.union(target, this.right(i, j));
+		}
 		
 		}catch(IndexOutOfBoundsException e){}
 		
 
-		//edge case
+		// edge case
 		if(N == 1) this.percolatesRightNow = true;
 		
 	}
@@ -134,7 +146,10 @@ public class Percolation {
 		// http://coursera.cs.princeton.edu/algs4/checklists/percolation.html
 		
 		// will work as long as we stop when we find a way in which it percolates
-		boolean res = this.isOpen(i, j) && this.uf.connected(this.virtualTopSite, this.mappedGrid[i-1][j-1]);
+//		boolean res = this.isOpen(i, j) && this.uf.connected(this.virtualTopSite, this.mappedGrid[i-1][j-1]);
+		
+		boolean res = this.isOpen(i, j) && this.extUf.connected(this.virtualTopSite, this.mappedGrid[i-1][j-1]);
+
 //		if(res && (this.mappedGrid[i-1][j-1] >= N*N-N)){
 //			print.ln("( " + i + ", " + j + " ) " + " is full!");
 //			print.ln("size of subtree: " + this.uf.find(this.mappedGrid[i-1][j-1]));
