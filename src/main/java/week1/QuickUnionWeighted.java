@@ -51,15 +51,16 @@ public class QuickUnionWeighted {
 		
 		fillIDs();
 		
-		union(4, 0);
-		union(0, 3);
-		union(4, 5);
-		union(6, 2);
-		union(0, 7);
-		union(9, 8);
-		union(9, 2);		
-		union(4, 6);
-		union(1, 9);
+		union(2,8);
+		union(7,4);
+		union(4,3);
+		union(7,0);
+		union(5,3);
+		union(1,5);
+		union(6,9);
+		union(6,8);
+		union(5,8);
+		
 		
 		
 		//print.ln(isConnected(5, 3) );

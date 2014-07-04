@@ -33,12 +33,12 @@ public class QuickFind {
 
 		fillIDs();
 		
-		union(4, 9);
-		union(7, 8);
-		union(1, 6);
-		union(3, 0);
-		union(1, 8);
-		union(0, 5);
+		union(8,9);
+		union(8,1);
+		union(1,3);
+		union(5,1);
+		union(3,6);
+		union(0,1);
 		
 		print.ln(ids);
 		
