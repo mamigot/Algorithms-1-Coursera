@@ -165,27 +165,9 @@ public class Percolation {
 		// sites.
 		// see diagram at:
 		// http://coursera.cs.princeton.edu/algs4/checklists/percolation.html
-
-		// will work as long as we stop when we find a way in which it
-		// percolates
-		// boolean res = this.isOpen(i, j) &&
-		// this.uf.connected(this.virtualTopSite, this.mappedGrid[i-1][j-1]);
-
-		// boolean res = this.isOpen(i, j)
-		// && this.extUf.connected(this.virtualTopSite,
-		// this.mappedGrid[i - 1][j - 1]);
 		boolean res = this.isOpen(i, j)
 				&& this.extUf.connected(this.virtualTopSite,
 						this.mapped(i - 1, j - 1));
-
-		// if(res && (this.mappedGrid[i-1][j-1] >= N*N-N)){
-		// print.ln("( " + i + ", " + j + " ) " + " is full!");
-		// print.ln("size of subtree: " +
-		// this.uf.find(this.mappedGrid[i-1][j-1]));
-		// print.ln("size of subtree above: " +
-		// this.uf.find(this.mappedGrid[i-2][j-1]));
-		// print.ln();
-		// }
 
 		return res;
 	}
