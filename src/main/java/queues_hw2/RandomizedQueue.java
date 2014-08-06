@@ -108,15 +108,15 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 				// Fill itValues in a nonrandom order
 				this.itValues = (Item[]) new Object[size];
 				int counter = 0;
-				
-				for(int i = 0; i < values.length; i++){
-					if(values[i] != null){
+
+				for (int i = 0; i < values.length; i++) {
+					if (values[i] != null) {
 						this.itValues[counter] = (Item) values[i];
 					}
-					
+
 					counter++;
 				}
-				
+
 				// Implement O(N) randomization algorithm
 				// Knuth shuffle
 				StdRandom.shuffle(itValues);
@@ -125,17 +125,17 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
 			public boolean hasNext() {
 				return this.front <= this.itValues.length - 1;
-				
+
 			}
 
 			public Item next() {
-				if(!this.hasNext())
+				if (!this.hasNext())
 					throw new NoSuchElementException();
-				
-				Item retVal = this.itValues[ this.front ];
-				this.itValues[ this.front ] = null;
+
+				Item retVal = this.itValues[this.front];
+				this.itValues[this.front] = null;
 				this.front++;
-				
+
 				return retVal;
 
 			}
@@ -147,7 +147,9 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
 		}
 
-		return (Iterator<Item>) new CustomIterator<Item>(this.values, this.size());
+		return (Iterator<Item>) new CustomIterator<Item>(this.values,
+				this.size());
+		
 	}
 
 	private boolean isFull() {
@@ -178,41 +180,34 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 	}
 
 	/*
-	@Override
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-
-		for (int i = 0; i < this.values.length; i++) {
-			if (this.values[i] == null)
-				sb.append(" _ ");
-			else
-				sb.append(" " + this.values[i] + " ");
-		}
-
-		return sb.toString();
-
-	}
-	*/
+	 * @Override public String toString() { StringBuilder sb = new
+	 * StringBuilder();
+	 * 
+	 * for (int i = 0; i < this.values.length; i++) { if (this.values[i] ==
+	 * null) sb.append(" _ "); else sb.append(" " + this.values[i] + " "); }
+	 * 
+	 * return sb.toString();
+	 * 
+	 * }
+	 */
 
 	/** Unit testing **/
 	public static void main(String[] args) {
 
-//		RandomizedQueue<Character> nums = new RandomizedQueue<Character>();
-//		nums.enqueue('a');
-//		nums.enqueue('a');
-//		nums.enqueue('a');
-//		nums.dequeue();
-//		nums.dequeue();
-//		nums.enqueue('b');
-//		nums.enqueue('c');
-//		nums.enqueue('d');
-//		nums.enqueue('e');
-//		nums.enqueue('f');
-//
-//		for(Character bob:nums)
-//			System.out.println(bob);
-
-
+		// RandomizedQueue<Character> nums = new RandomizedQueue<Character>();
+		// nums.enqueue('a');
+		// nums.enqueue('a');
+		// nums.enqueue('a');
+		// nums.dequeue();
+		// nums.dequeue();
+		// nums.enqueue('b');
+		// nums.enqueue('c');
+		// nums.enqueue('d');
+		// nums.enqueue('e');
+		// nums.enqueue('f');
+		//
+		// for(Character bob:nums)
+		// System.out.println(bob);
 
 	}
 

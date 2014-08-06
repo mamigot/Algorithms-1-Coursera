@@ -136,30 +136,11 @@ public class Deque<Item> implements Iterable<Item> {
 
 		// If the client class the next() method in the iterator and there are
 		// no more items to return, throw a NoSuchElementException
-		class DequeIterator<Item> implements Iterator<Item> {
+		Iterator<Item> it = new Iterator<Item>() {
 
 			private Item[] values;
 			private int startPos;
 			private int size;
-
-			private DequeIterator(Node head, int size) {
-				this.values = (Item[]) new Object[size];
-
-				this.startPos = 0;
-				this.size = size;
-
-				// Fill the array with the Items
-				Node curr = head;
-
-				for (int i = 0; i < size; i++) {
-					if (curr != null) {
-						this.values[i] = (Item) curr.value;
-					}
-					
-					curr = curr.next;
-				}
-
-			}
 
 			public boolean hasNext() {
 				return this.startPos < this.size;
@@ -182,45 +163,40 @@ public class Deque<Item> implements Iterable<Item> {
 
 			}
 
-		}
+		};
 
-		return new DequeIterator<Item>(this.HEAD, this.size());
+		return it;
 
 	}
 
 	/*
-	@Override
-	private String toString() {
-		StringBuilder sb = new StringBuilder();
-
-		Node curr = this.HEAD;
-		while (curr != null) {
-			sb.append(curr.value + ", ");
-			curr = curr.next;
-		}
-
-		return sb.toString();
-	}
-	*/
+	 * @Override private String toString() { StringBuilder sb = new
+	 * StringBuilder();
+	 * 
+	 * Node curr = this.HEAD; while (curr != null) { sb.append(curr.value +
+	 * ", "); curr = curr.next; }
+	 * 
+	 * return sb.toString(); }
+	 */
 
 	/** Unit testing **/
 	public static void main(String[] args) {
 
-//		Deque<Integer> nums = new Deque<Integer>();
-//		nums.addFirst(2);
-//		nums.addFirst(3);
-//		nums.addLast(10);
-//		nums.addFirst(7);
-//
-//		Iterator<Integer> it = nums.iterator();
-//		System.out.println(nums);
-//		
-//		System.out.println("\n");
-//
-//		for(Integer curr:nums)
-//			System.out.println(curr);
-		
-		//System.out.println(it.next());
+		// Deque<Integer> nums = new Deque<Integer>();
+		// nums.addFirst(2);
+		// nums.addFirst(3);
+		// nums.addLast(10);
+		// nums.addFirst(7);
+		//
+		// Iterator<Integer> it = nums.iterator();
+		// System.out.println(nums);
+		//
+		// System.out.println("\n");
+		//
+		// for(Integer curr:nums)
+		// System.out.println(curr);
+
+		// System.out.println(it.next());
 
 	}
 
