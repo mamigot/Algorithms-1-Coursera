@@ -1,8 +1,5 @@
 package queues_hw2;
 
-import edu.princeton.cs.introcs.StdIn;
-import edu.princeton.cs.introcs.StdRandom;
-
 public class Subset {
 
 	public static void main(String[] args) {

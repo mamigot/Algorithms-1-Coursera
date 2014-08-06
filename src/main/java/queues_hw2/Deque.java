@@ -133,70 +133,83 @@ public class Deque<Item> implements Iterable<Item> {
 
 	/** Return an iterator over items in order from front to end **/
 	public Iterator<Item> iterator() {
-
-		// If the client class the next() method in the iterator and there are
-		// no more items to return, throw a NoSuchElementException
-		Iterator<Item> it = new Iterator<Item>() {
-
-			private Item[] values;
-			private int startPos;
-			private int size;
-
-			public boolean hasNext() {
-				return this.startPos < this.size;
-
-			}
-
-			public Item next() {
-				if (!this.hasNext())
-					throw new NoSuchElementException();
-
-				Item retVal = this.values[startPos];
-				this.startPos++;
-
-				return retVal;
-
-			}
-
-			public void remove() {
-				throw new UnsupportedOperationException();
-
-			}
-
-		};
-
-		return it;
+		return new DequeIterator<Item>(this.HEAD, this.size());
 
 	}
 
-	/*
-	 * @Override private String toString() { StringBuilder sb = new
-	 * StringBuilder();
-	 * 
-	 * Node curr = this.HEAD; while (curr != null) { sb.append(curr.value +
-	 * ", "); curr = curr.next; }
-	 * 
-	 * return sb.toString(); }
-	 */
+	private class DequeIterator<Item> implements Iterator<Item> {
+
+		private Item[] values;
+		private int startPos;
+		private int size;
+
+		private DequeIterator(Node head, int size) {
+			this.values = (Item[]) new Object[size];
+
+			this.startPos = 0;
+			this.size = size;
+
+			// Fill the array with the items
+			Node curr = head;
+
+			for (int i = 0; i < size; i++) {
+				if (curr != null) {
+					this.values[i] = (Item) curr.value;
+				}
+
+				curr = curr.next;
+			}
+
+		}
+
+		public boolean hasNext() {
+			return this.startPos < this.size;
+
+		}
+
+		public Item next() {
+			if (!this.hasNext())
+				throw new NoSuchElementException();
+
+			Item retVal = this.values[startPos];
+			this.startPos++;
+
+			return retVal;
+
+		}
+
+		public void remove() {
+			throw new UnsupportedOperationException();
+
+		}
+
+	}
+
+	// public String toString() {
+	// StringBuilder sb = new StringBuilder();
+	//
+	// Node curr = this.HEAD;
+	// while (curr != null) {
+	// sb.append(curr.value + ", ");
+	// curr = curr.next;
+	// }
+	//
+	// return sb.toString();
+	// }
 
 	/** Unit testing **/
 	public static void main(String[] args) {
 
-		// Deque<Integer> nums = new Deque<Integer>();
-		// nums.addFirst(2);
-		// nums.addFirst(3);
-		// nums.addLast(10);
-		// nums.addFirst(7);
-		//
-		// Iterator<Integer> it = nums.iterator();
-		// System.out.println(nums);
-		//
-		// System.out.println("\n");
-		//
-		// for(Integer curr:nums)
-		// System.out.println(curr);
+		Deque<Integer> nums = new Deque<Integer>();
+		nums.addFirst(2);
+		nums.addFirst(3);
+		nums.addLast(10);
+		nums.addFirst(7);
 
-		// System.out.println(it.next());
+		Iterator<Integer> it = nums.iterator();
+
+		for (Integer curr : nums)
+			System.out.println(curr);
 
 	}
 

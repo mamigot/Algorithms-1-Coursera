@@ -1,7 +1,5 @@
 package percolation_hw1;
 
-import edu.princeton.cs.algs4.WeightedQuickUnionUF;
-
 /**
  * Programming Assignment #1: Percolation
  * 

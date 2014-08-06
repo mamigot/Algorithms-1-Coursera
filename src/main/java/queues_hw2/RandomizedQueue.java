@@ -25,7 +25,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 		this.values = (Item[]) new Object[startingSize];
 
 		this.front = 0;
-		this.rear = 0;
+		//this.rear = 0;
 
 		this.size = 0;
 	}
@@ -147,7 +147,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
 		}
 
-		return (Iterator<Item>) new CustomIterator<Item>(this.values,
+		return new CustomIterator<Item>(this.values,
 				this.size());
 		
 	}
@@ -194,20 +194,20 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 	/** Unit testing **/
 	public static void main(String[] args) {
 
-		// RandomizedQueue<Character> nums = new RandomizedQueue<Character>();
-		// nums.enqueue('a');
-		// nums.enqueue('a');
-		// nums.enqueue('a');
-		// nums.dequeue();
-		// nums.dequeue();
-		// nums.enqueue('b');
-		// nums.enqueue('c');
-		// nums.enqueue('d');
-		// nums.enqueue('e');
-		// nums.enqueue('f');
-		//
-		// for(Character bob:nums)
-		// System.out.println(bob);
+		 RandomizedQueue<Character> nums = new RandomizedQueue<Character>();
+		 nums.enqueue('a');
+		 nums.enqueue('a');
+		 nums.enqueue('a');
+		 nums.dequeue();
+		 nums.dequeue();
+		 nums.enqueue('b');
+		 nums.enqueue('c');
+		 nums.enqueue('d');
+		 nums.enqueue('e');
+		 nums.enqueue('f');
+		 
+		 for(Character bob:nums)
+			 System.out.println(bob);
 
 	}
 

@@ -22,9 +22,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 import shortcuts.print;
-import edu.princeton.cs.introcs.In;
-import edu.princeton.cs.introcs.StdDraw;
-import edu.princeton.cs.introcs.StdIn;
 
 public class PercolationVisualizer {
 

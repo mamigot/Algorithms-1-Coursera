@@ -32,7 +32,7 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/Users/miguelamigot/Documents/GitHub/Algorithms 1, Coursera/course_jar_files/algs4-package.jar"/>
-	<classpathentry kind="lib" path="/Users/miguelamigot/Documents/GitHub/Algorithms 1, Coursera/course_jar_files/stdlib-package.jar"/>
+	<classpathentry kind="lib" path="/Users/miguelamigot/Software/Coursera/Algorithms 1, Coursera/course_jar_files/stdlib-package.jar"/>
+	<classpathentry kind="lib" path="/Users/miguelamigot/Software/Coursera/Algorithms 1, Coursera/course_jar_files/algs4-package.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

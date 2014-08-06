@@ -1,8 +1,5 @@
 package percolation_hw1;
 
-import edu.princeton.cs.introcs.StdRandom;
-import edu.princeton.cs.introcs.StdStats;
-
 /**
  * Programming Assignment #1: Percolation
  * 
