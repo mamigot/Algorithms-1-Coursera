@@ -21,6 +21,7 @@ import java.awt.Font;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
+import edu.princeton.cs.introcs.*;
 import shortcuts.print;
 
 public class PercolationVisualizer {

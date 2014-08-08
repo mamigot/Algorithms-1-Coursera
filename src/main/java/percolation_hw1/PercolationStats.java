@@ -1,5 +1,7 @@
 package percolation_hw1;
 
+import edu.princeton.cs.introcs.*;
+
 /**
  * Programming Assignment #1: Percolation
  * 

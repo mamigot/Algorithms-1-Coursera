@@ -205,9 +205,7 @@ public class Deque<Item> implements Iterable<Item> {
 		nums.addFirst(3);
 		nums.addLast(10);
 		nums.addFirst(7);
-
-		Iterator<Integer> it = nums.iterator();
-
+		
 		for (Integer curr : nums)
 			System.out.println(curr);
 

@@ -13,6 +13,8 @@
 
 package patterns_hw3;
 
+import edu.princeton.cs.introcs.*;
+
 public class PointPlotter {
 	public static void main(String[] args) {
 

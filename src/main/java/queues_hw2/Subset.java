@@ -1,5 +1,7 @@
 package queues_hw2;
 
+import edu.princeton.cs.introcs.*;
+
 public class Subset {
 
 	public static void main(String[] args) {
