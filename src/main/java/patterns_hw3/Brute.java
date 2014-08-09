@@ -61,6 +61,7 @@ public class Brute {
 		// Make arrays of four points each
 		// Check if that array (or a permutation) is present in lines
 
+		
 		int numPoints = this.allReadPoints.length;
 		Point[] currPoints = new Point[4];
 
@@ -74,12 +75,42 @@ public class Brute {
 				for (int c = b + 1; c < numPoints; c++) {
 					currPoints[2] = this.allReadPoints[c];
 
-					for (int d = c + 1; d < numPoints; d++) {
+					for (int d = c + 1; d < numPoints; d++) {				
 						currPoints[3] = this.allReadPoints[d];
-
-					
-						//(14000, 10000) -> (18000, 10000) -> (19000, 10000) -> (32000, 10000)
 						
+						// // //
+						
+						// doesn't cover: 14 19 21 32
+						
+						// 14 18 19 32 exists
+						// 14 18 19 21 exists
+						
+						Point ted = new Point(14000, 10000);
+						Point ned = new Point(19000, 10000);
+						Point tom = new Point(21000, 10000);
+						Point cat = new Point(32000, 10000);
+						boolean first = false;
+						boolean second = false;
+						boolean third = false;
+						boolean fourth = false;
+						for(Point test:currPoints){
+							if(test.compareTo(ted) == 0)
+								first = true;
+							if(test.compareTo(ned) == 0)
+								second = true;
+							if(test.compareTo(tom) == 0)
+								third = true;
+							if(test.compareTo(cat) == 0)
+								fourth = true;	
+						}
+						if(first && second && third && fourth){
+							System.out.println("we got a match!");
+							System.exit(1);
+						}
+						
+						
+						
+
 						if (areCollinear(currPoints)) {
 							Arrays.sort(currPoints);
 
@@ -109,6 +140,7 @@ public class Brute {
 			}
 		}
 
+		
 		for (Point[] pts : this.distinctLines)
 			displayLine(pts);
 
