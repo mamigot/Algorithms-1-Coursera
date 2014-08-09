@@ -1,8 +1,8 @@
 package patterns_hw3;
+import edu.princeton.cs.introcs.StdDraw;
 
 import java.util.Comparator;
 
-import edu.princeton.cs.introcs.StdDraw;
 
 /**
  * Built on top of: http://coursera.cs.princeton.edu/algs4/checklists/Point.java
@@ -19,6 +19,9 @@ public class Point implements Comparable<Point> {
 		// horizontal, vertical, and degenerate line segments as in the
 		// slopeTo() method
 		public int compare(Point p1, Point p2) {
+			if(p1 == null || p2 == null)
+				throw new NullPointerException();
+			
 			double slope_p1 = Point.this.slopeTo(p1);
 			double slope_p2 = Point.this.slopeTo(p2);
 
@@ -63,6 +66,9 @@ public class Point implements Comparable<Point> {
 
 	// slope between this point and that point
 	public double slopeTo(Point that) {
+		if(that == null)
+			throw new NullPointerException();
+		
 		if (that.y == this.y && that.x == this.x)
 			return Double.NEGATIVE_INFINITY;
 		if (that.x == this.x)
@@ -71,13 +77,13 @@ public class Point implements Comparable<Point> {
 			return 0.0; //positive zero
  
 		else
-			return (that.y - this.y) / (that.x - this.x);
+			return (that.y - this.y)*1.0 / (that.x - this.x)*1.0;
 
 	}
 
 	// Avoid "strange" behavior by syncing it with compareTo()
 	// http://docs.oracle.com/javase/7/docs/api/java/util/Comparator.html
-	public boolean equals(Point that) {
+	private boolean equals(Point that) {
 		if (this.y == that.y && this.x == that.x)
 			return true;
 		else
@@ -115,23 +121,23 @@ public class Point implements Comparable<Point> {
 
 	public static void main(String[] args) {
 
-		int xmike = 5;
-		int ymike = 4;
-		Point mike = new Point(xmike, ymike);
-
-		int xbob = 2;
-		int ybob = 5;
-		Point bob = new Point(xbob, ybob);
-
-		int res = mike.compareTo(bob);
-		if (res == 1)
-			System.out.println("mike is greater");
-		else if (res == -1)
-			System.out.println("bob is greater");
-		else if (res == 0)
-			System.out.println("they are equal");
-		else
-			System.out.println("what.");
+//		int xmike = 5;
+//		int ymike = 4;
+//		Point mike = new Point(xmike, ymike);
+//
+//		int xbob = 2;
+//		int ybob = 5;
+//		Point bob = new Point(xbob, ybob);
+//
+//		int res = mike.compareTo(bob);
+//		if (res == 1)
+//			System.out.println("mike is greater");
+//		else if (res == -1)
+//			System.out.println("bob is greater");
+//		else if (res == 0)
+//			System.out.println("they are equal");
+//		else
+//			System.out.println("what.");
 
 	}
 }
