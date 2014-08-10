@@ -32,8 +32,6 @@ public class Brute {
 	 */
 	private Brute(String filename) {
 
-		// String filename = "src/test/collinear/input6.txt";
-
 		StdDraw.setXscale(0, 32768);
 		StdDraw.setYscale(0, 32768);
 
