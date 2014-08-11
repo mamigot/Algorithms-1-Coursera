@@ -66,7 +66,7 @@ public class Fast {
 	 * equal slopes with respect to p. If so, these points, together with p, are
 	 * collinear
 	 */
-	private List<Point[]> getDistinctLines() {
+	private void getDistinctLines() {
 
 		this.visited = new ArrayList<Point>();
 
@@ -76,10 +76,11 @@ public class Fast {
 		double slope;
 		Point p;
 		Point[] pointsBySlope;
+		SlopeCounter temp;
+		SlopeCounter curr;
 		HashMap<Double, SlopeCounter> mappedSlopes;
+		List<Point> relevantPts;
 		for (int i = 0; i < numPoints; i++) {
-
-			// System.out.println("P O I N T");
 
 			p = this.allReadPoints[i];
 			pointsBySlope = new Point[numPoints - 1];
@@ -90,21 +91,8 @@ public class Fast {
 					continue;
 
 				pointsBySlope[counter] = this.allReadPoints[k];
-
 				counter++;
 			}
-
-			/* <PRINTING> */
-//			Arrays.sort(pointsBySlope, p.SLOPE_ORDER);
-//
-//			System.out.println("origin: " + p + "\n");
-//			for (Point matched : pointsBySlope) {
-//				System.out.println(matched);
-//				System.out.println("slope: " + p.slopeTo(matched) + "\n");
-//			}
-//
-//			System.out.println("\n");
-			/* </PRINTING> */
 
 			// Build counters for each slope (see SlopeCounter)
 			mappedSlopes = new HashMap<Double, SlopeCounter>();
@@ -112,7 +100,7 @@ public class Fast {
 				slope = p.slopeTo(matchedPt);
 				if (mappedSlopes.containsKey(slope)) {
 					// Update the counters
-					SlopeCounter temp = mappedSlopes.get(slope);
+					temp = mappedSlopes.get(slope);
 					mappedSlopes.put(slope, temp.updateCounter(matchedPt));
 
 				} else {
@@ -125,17 +113,18 @@ public class Fast {
 			// See which slopes in mappedSlopes corresponded to "high enough"
 			// counts
 			for (Entry<Double, SlopeCounter> entry : mappedSlopes.entrySet()) {
-				SlopeCounter curr = entry.getValue();
+				curr = entry.getValue();
 				if (curr.count >= 3) {
 					// Now we're "cooking"
 					// Get the list, mark its items as limited and print the
 					// values
-					List<Point> relevantPts = curr.points;
-					// If a single item in relevantPts is in this.visited then ignore
+					relevantPts = curr.points;
+					// If a single item in relevantPts is in this.visited then
+					// ignore
 					// the list altogether
-					if(this.visited.contains(relevantPts.get(0)))
+					if (this.visited.contains(relevantPts.get(0)))
 						continue;
-					
+
 					// Results must be sorted when displayed
 					Collections.sort(relevantPts);
 					displayLine(relevantPts);
@@ -145,8 +134,6 @@ public class Fast {
 			}
 
 		}
-
-		return null;
 
 	}
 
@@ -171,6 +158,10 @@ public class Fast {
 
 	}
 
+	/**
+	 * Used to keep track of how many times a slope shows up as well as the
+	 * relevant points.
+	 */
 	private class SlopeCounter {
 
 		public int count = 0;
