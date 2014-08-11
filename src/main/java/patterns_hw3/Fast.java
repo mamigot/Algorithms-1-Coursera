@@ -4,6 +4,7 @@ import edu.princeton.cs.introcs.In;
 import edu.princeton.cs.introcs.StdDraw;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
@@ -135,6 +136,8 @@ public class Fast {
 					if(this.visited.contains(relevantPts.get(0)))
 						continue;
 					
+					// Results must be sorted when displayed
+					Collections.sort(relevantPts);
 					displayLine(relevantPts);
 					this.visited.addAll(relevantPts);
 
@@ -195,7 +198,7 @@ public class Fast {
 		try {
 			filename = args[0];
 		} catch (ArrayIndexOutOfBoundsException e) {
-			filename = "src/test/collinear/input6.txt";
+			filename = "src/test/collinear/input8.txt";
 		}
 
 		Fast useless = new Fast();
