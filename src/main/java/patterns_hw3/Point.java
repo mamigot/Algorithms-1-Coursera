@@ -83,6 +83,7 @@ public class Point implements Comparable<Point> {
 
 	// Avoid "strange" behavior by syncing it with compareTo()
 	// http://docs.oracle.com/javase/7/docs/api/java/util/Comparator.html
+	// Grader doesn't allow this method to be public...
 	private boolean equals(Point that) {
 		if (this.y == that.y && this.x == that.x)
 			return true;

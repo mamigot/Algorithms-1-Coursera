@@ -19,7 +19,7 @@ public class Fast {
 	private Point[] allReadPoints;
 	// In order to avoid showing permutations of the same points
 	// keep track of the visited nodes
-	private List<Point> visited;
+	private List<List<Point>> visited;
 
 	/**
 	 * The grader tests for this constructor specifically, which is rather
@@ -68,7 +68,7 @@ public class Fast {
 	 */
 	private void getDistinctLines() {
 
-		this.visited = new ArrayList<Point>();
+		this.visited = new ArrayList<List<Point>>();
 
 		int numPoints = this.allReadPoints.length;
 
@@ -119,16 +119,28 @@ public class Fast {
 					// Get the list, mark its items as limited and print the
 					// values
 					relevantPts = curr.points;
-					// If a single item in relevantPts is in this.visited then
-					// ignore
-					// the list altogether
-					if (this.visited.contains(relevantPts.get(0)))
-						continue;
 
 					// Results must be sorted when displayed
 					Collections.sort(relevantPts);
+
+					// Don't output the same segment twice
+					// (it's rude)
+					if (!this.visited.isEmpty()) {
+						// Check if the list is present
+						boolean listIsPresent = false;
+						for(List<Point> savedList:this.visited){
+							if(pointListComparator(savedList, relevantPts)){
+								listIsPresent = true;
+								break;
+							}	
+						}
+						
+						if(listIsPresent)
+							break;
+					}
+
+					this.visited.add(relevantPts);
 					displayLine(relevantPts);
-					this.visited.addAll(relevantPts);
 
 				}
 			}
@@ -156,6 +168,34 @@ public class Fast {
 
 		System.out.println(sb.toString());
 
+	}
+
+	private boolean pointListComparator(List<Point> bob, List<Point> alice) {
+		// Check if both lists contain the same number of elements
+		int size = bob.size();
+		if (size != alice.size())
+			return false;
+
+		// Convert them to arrays (faster lookups; should give arrays in the
+		// first place)
+		Object[] bobs = bob.toArray();
+		Object[] alices = alice.toArray();
+
+		// Once we know that their sizes are similar, check that all of bob's
+		// elements are in alice's list
+		for (int b = 0; b < size; b++) {
+			for (int a = 0; a < size; a++) {
+				if(((Point)bobs[b]).compareTo(((Point)alices[a])) == 0)
+					break;
+				
+				else if(a == size - 1){
+					// Haven't found it by now... not here
+					return false;
+				}
+			}
+		}
+
+		return true;
 	}
 
 	/**
@@ -189,7 +229,7 @@ public class Fast {
 		try {
 			filename = args[0];
 		} catch (ArrayIndexOutOfBoundsException e) {
-			filename = "src/test/collinear/input8.txt";
+			filename = "src/test/collinear/input80.txt";
 		}
 
 		Fast useless = new Fast();
